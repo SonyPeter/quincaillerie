@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* Palette basée sur le logo Quincaillerie de la Liberté (bleu marine + orange) */
+@theme {
+    --color-navy-950: #0a1830;
+    --color-navy-900: #10254a;
+    --color-navy-800: #1a3563;
+    --color-navy-700: #24467d;
+    --color-navy-600: #2f5798;
+    --color-brand-orange: #f5821f;
+}
