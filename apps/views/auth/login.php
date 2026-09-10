@@ -32,16 +32,18 @@
                     </div>
                 <?php endif; ?>
 
-                <form method="POST" action="<?= BASE_URL ?>/login" class="space-y-4">
+                <form method="POST" action="<?= BASE_URL ?>/login" class="space-y-4" autocomplete="off">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 md:text-white/80 mb-1">Identifiant</label>
                         <input type="text" name="username" required autofocus
+                            value="<?= htmlspecialchars($username ?? '') ?>"
+                            autocomplete="off"
                             class="w-full bg-white border border-gray-300 md:border-white/20 rounded px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 md:text-white/80 mb-1">Mot de passe</label>
-                        <input type="password" name="password" required
+                        <input type="password" name="password" required autocomplete="new-password"
                             class="w-full bg-white border border-gray-300 md:border-white/20 rounded px-3 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-orange-500">
                     </div>
                     <button type="submit"
@@ -56,6 +58,16 @@
             </div>
         </div>
     </div>
+
+    <!-- Empêche le retour arrière tant qu'on est sur la page de connexion -->
+    <script>
+        (function() {
+            window.history.pushState(null, '', window.location.href);
+            window.onpopstate = function() {
+                window.history.pushState(null, '', window.location.href);
+            };
+        })();
+    </script>
 
 </body>
 
