@@ -23,6 +23,7 @@ $router->post('/login', 'authController@login');
 $router->post('/logout', 'authController@logout');
 
 $router->get('/dashboard', 'dashboardController@index');
+$router->get('/catalogue', 'catalogueController@index');
 
 $router->get('/categories', 'categoryController@index');
 $router->post('/categories', 'categoryController@store');

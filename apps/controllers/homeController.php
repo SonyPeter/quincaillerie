@@ -17,6 +17,7 @@ class homeController
         }
 
         $categories = (new categoryModel())->allWithProductCount();
+        $products = (new productModel())->all();
 
         require BASE_PATH . '/apps/views/home/index.php';
     }
