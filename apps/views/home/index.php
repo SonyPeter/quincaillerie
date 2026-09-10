@@ -873,7 +873,7 @@
     <footer class="bg-navy-950 border-t border-white/10 text-gray-400 py-8">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <p>© <?= date('Y') ?> Quincaillerie de la Liberté. Tous droits réservés.</p>
-            <a href="<?= BASE_URL ?>/login" class="text-orange-400 hover:text-orange-300 font-medium">Espace employé →</a>
+            <!-- <a href="<?= BASE_URL ?>/login" class="text-orange-400 hover:text-orange-300 font-medium">Espace employé →</a> -->
         </div>
     </footer>
 
