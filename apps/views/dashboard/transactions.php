@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $transactions */
 /** @var array $annees */
 /** @var string $periode */
@@ -110,5 +111,12 @@ $sousTypeLabels = [
     periodeSelect.addEventListener('change', () => {
         champMois.classList.toggle('hidden', periodeSelect.value !== 'mois');
         champAnnee.classList.toggle('hidden', periodeSelect.value !== 'annee');
+    });
+</script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
     });
 </script>

@@ -1,4 +1,6 @@
-<?php /** @var array $ventes */
+<?php
+
+/** @var array $ventes */
 
 $methodLabels = ['cash' => 'Cash', 'moncash' => 'MonCash', 'natcash' => 'NatCash'];
 ?>
@@ -58,3 +60,10 @@ $methodLabels = ['cash' => 'Cash', 'moncash' => 'MonCash', 'natcash' => 'NatCash
         </tbody>
     </table>
 </div>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

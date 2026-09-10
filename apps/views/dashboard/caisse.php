@@ -1,4 +1,5 @@
 <?php
+
 /** @var string $csrfToken */
 /** @var array|null $soldes */
 /** @var array|null $demandesEnAttente */
@@ -233,3 +234,10 @@ $statutLabels = [
     </div>
 
 <?php endif; ?>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

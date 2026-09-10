@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $menuGroups */
 /** @var array $bottomItems */
 /** @var string $currentRoute */
@@ -170,3 +171,10 @@
 </body>
 
 </html>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

@@ -1,4 +1,9 @@
-<?php /** @var array $produits */ /** @var array $produitsEnAttente */ /** @var array $categories */ /** @var string $csrfToken */ ?>
+<?php
+
+/** @var array $produits */
+/** @var array $produitsEnAttente */
+/** @var array $categories */
+/** @var string $csrfToken */ ?>
 
 <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-white">Produits</h1>
@@ -347,4 +352,11 @@
 
     document.getElementById('texte-close').addEventListener('click', hideTexte);
     document.getElementById('texte-backdrop').addEventListener('click', hideTexte);
+</script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
 </script>

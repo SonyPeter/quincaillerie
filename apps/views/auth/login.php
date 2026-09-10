@@ -59,13 +59,25 @@
         </div>
     </div>
 
-    <!-- Empêche le retour arrière tant qu'on est sur la page de connexion -->
+    <!-- Neutralise le bouton précédent : chaque retour est renvoyé vers l'avant -->
     <script>
         (function() {
-            window.history.pushState(null, '', window.location.href);
-            window.onpopstate = function() {
-                window.history.pushState(null, '', window.location.href);
-            };
+            'use strict';
+
+            // Page restaurée depuis le cache du navigateur (bfcache) -> rechargement forcé
+            window.addEventListener('pageshow', function(e) {
+                if (e.persisted) {
+                    window.location.reload();
+                }
+            });
+
+            // Entrée sentinelle devant le bouton précédent
+            history.pushState(null, '', location.href);
+
+            // Toute tentative de retour -> on force le retour AVANT (vers la sentinelle = login)
+            window.addEventListener('popstate', function() {
+                history.go(1);
+            });
         })();
     </script>
 

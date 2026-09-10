@@ -1,4 +1,7 @@
-<?php /** @var array $categories */ /** @var string $csrfToken */ ?>
+<?php
+
+/** @var array $categories */
+/** @var string $csrfToken */ ?>
 
 <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-bold text-white">Catégories de produits</h1>
@@ -110,3 +113,10 @@
         </tbody>
     </table>
 </div>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

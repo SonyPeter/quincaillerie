@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $moi */
 /** @var array|null $vendeurs */
 /** @var string $csrfToken */
@@ -174,3 +175,10 @@
     </div>
 
 <?php endif; ?>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

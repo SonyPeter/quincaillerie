@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $product */
 /** @var array $movements */
 
@@ -57,3 +58,10 @@ $labels = [
         </tbody>
     </table>
 </div>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

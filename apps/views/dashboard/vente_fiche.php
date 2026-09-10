@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $sale */
 /** @var array $items */
 /** @var string $csrfToken */
@@ -17,8 +18,13 @@ $estPayee = $sale['payment_status'] === 'paye';
     <link href="<?= BASE_URL ?>/public/css/output.css" rel="stylesheet">
     <style>
         @media print {
-            .no-print { display: none !important; }
-            body { padding: 0 !important; }
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                padding: 0 !important;
+            }
         }
     </style>
 </head>
@@ -133,3 +139,10 @@ $estPayee = $sale['payment_status'] === 'paye';
 </body>
 
 </html>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

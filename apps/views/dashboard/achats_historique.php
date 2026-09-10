@@ -1,4 +1,6 @@
-<?php /** @var array $achats */ ?>
+<?php
+
+/** @var array $achats */ ?>
 
 <div class="flex items-center justify-between mb-6">
     <div>
@@ -44,3 +46,10 @@
         </tbody>
     </table>
 </div>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

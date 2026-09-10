@@ -44,5 +44,12 @@ $maxJour = max(array_column($salesLast7Days, 'total')) ?: 1;
         <?php endforeach; ?>
     </div>
 </div>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>
 
 <!-- <p class="text-white/50 mt-6">Bienvenue, <?= htmlspecialchars($userName) ?>. Le module Messages sera ajouté à une prochaine étape.</p> -->

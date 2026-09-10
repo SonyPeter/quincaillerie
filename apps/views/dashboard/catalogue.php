@@ -806,3 +806,10 @@ $productsByCategory = $productsByCategory ?? [];
     inputsToRanges();
     render();
 </script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

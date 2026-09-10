@@ -1,4 +1,7 @@
-<?php /** @var array $produits */ /** @var string $csrfToken */ ?>
+<?php
+
+/** @var array $produits */
+/** @var string $csrfToken */ ?>
 
 <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
     <h1 class="text-2xl font-bold text-white">Ventes</h1>
@@ -132,4 +135,11 @@
     if (lignesContainer) {
         ajouterLigne();
     }
+</script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
 </script>

@@ -1,4 +1,5 @@
 <?php
+
 /** @var array $reception */
 /** @var array $envoyes */
 /** @var array $destinataires */
@@ -100,3 +101,10 @@
         <?php endif; ?>
     </div>
 </div>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>

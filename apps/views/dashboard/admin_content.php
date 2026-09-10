@@ -226,3 +226,10 @@ $maxCategorie = $maxCategorie ?: 1;
         document.getElementById(id).classList.add('hidden');
     }
 </script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            window.location.reload();
+        }
+    });
+</script>
