@@ -19,6 +19,7 @@ class Auth
         $_SESSION['user_name'] = $user['name'];
         $_SESSION['user_username'] = $user['username'];
         $_SESSION['user_role'] = $user['role'];
+        $_SESSION['user_created_by'] = $user['created_by'];
         $_SESSION['must_change_password'] = !empty($user['must_change_password']);
     }
 
@@ -62,6 +63,27 @@ class Auth
     public static function isAdmin(): bool
     {
         return ($_SESSION['user_role'] ?? null) === 'admin';
+    }
+
+    /**
+     * Super-admin : le compte administrateur d'origine (créé sans
+     * "created_by", c-à-d le compte seed). Lui seul peut changer le rôle
+     * des autres membres — un admin promu par un autre admin ne le peut pas.
+     */
+    public static function isSuperAdmin(): bool
+    {
+        return self::isAdmin() && empty($_SESSION['user_created_by']);
+    }
+
+    public static function requireSuperAdmin(): void
+    {
+        self::requireLogin();
+
+        if (!self::isSuperAdmin()) {
+            http_response_code(403);
+            echo '<h1>403 — Accès refusé</h1><p>Vous n\'avez pas les droits nécessaires pour accéder à cette page.</p>';
+            exit;
+        }
     }
 
     public static function mustChangePassword(): bool

@@ -83,6 +83,39 @@ $statutLabels = [
         </form>
     </div>
 
+    <!-- Admin : faire un retrait -->
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg p-6 mb-6">
+        <h2 class="font-semibold text-white mb-1">Faire un retrait</h2>
+        <p class="text-sm text-white/60 mb-4">Choisissez la cause du retrait et donnez les détails, comme le fait un vendeur.</p>
+        <form method="POST" action="<?= BASE_URL ?>/caisse" class="grid sm:grid-cols-2 gap-4">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+            <input type="hidden" name="action" value="demander_retrait">
+            <div>
+                <label class="block text-sm font-medium text-white/70 mb-1">Cause du retrait</label>
+                <select name="type" required class="w-full bg-white/10 border border-white/20 text-white rounded px-3 py-2">
+                    <?php foreach ($typeLabels as $value => $label): ?>
+                        <option value="<?= $value ?>" class="text-gray-800"><?= htmlspecialchars($label) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-white/70 mb-1">Montant</label>
+                <input type="number" name="amount" min="0.01" step="0.01" required
+                    class="w-full bg-white/10 border border-white/20 text-white rounded px-3 py-2">
+            </div>
+            <div class="sm:col-span-2">
+                <label class="block text-sm font-medium text-white/70 mb-1">Détails</label>
+                <input type="text" name="description" required
+                    class="w-full bg-white/10 border border-white/20 text-white placeholder-white/40 rounded px-3 py-2">
+            </div>
+            <div class="sm:col-span-2">
+                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2.5 rounded transition">
+                    Envoyer la demande
+                </button>
+            </div>
+        </form>
+    </div>
+
     <!-- Demandes de retrait en attente -->
     <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg p-6 mb-6">
         <h2 class="font-semibold text-white mb-4">Demandes de retrait en attente (<?= count($demandesEnAttente) ?>)</h2>

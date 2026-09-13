@@ -356,7 +356,7 @@ $productsByCategory = $productsByCategory ?? [];
                     $isPromo = !empty($p['old_price']) && $p['old_price'] > $p['unit_price'];
                     $imageUrl = !empty($p['image']) ? BASE_URL . '/public/uploads/produits/' . $p['image'] : null;
                 ?>
-                    <div class="product-item group bg-white border border-gray-100 rounded-2xl p-4 transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/70 hover:-translate-y-1 flex-col justify-between relative"
+                    <div class="product-item group relative bg-[#F7F8FA] hover:bg-[#F3F5F8] rounded-2xl p-4 pb-5 flex flex-col transition-all duration-300 hover:shadow-lg hover:shadow-gray-200/60 hover:-translate-y-1"
                         data-id="<?= htmlspecialchars($p['id']) ?>"
                         data-name="<?= htmlspecialchars(mb_strtolower($p['name'])) ?>"
                         data-cat-id="<?= htmlspecialchars($p['category_id']) ?>"
@@ -365,81 +365,71 @@ $productsByCategory = $productsByCategory ?? [];
                         data-promo="<?= $isPromo ? '1' : '0' ?>"
                         data-desc="<?= htmlspecialchars(mb_strtolower($p['description'] ?? '')) ?>">
 
-                        <div>
-                            <!-- Zone image -->
-                            <div class="relative w-full h-44 mb-4 flex items-center justify-center">
-                                <!-- Badges haut gauche (promo / stock) -->
-                                <div class="absolute top-0 left-0 z-10 flex flex-col items-start gap-1.5">
-                                    <?php if ($isPromo): ?>
-                                        <span class="px-2.5 py-1 rounded-lg bg-red-500 text-white text-[10px] font-bold backdrop-blur-md">
-                                            -<?= round((1 - $p['unit_price'] / $p['old_price']) * 100) ?>%
-                                        </span>
-                                    <?php endif; ?>
-                                    <?php if ($isOut): ?>
-                                        <span class="px-2.5 py-1 rounded-lg bg-red-500/95 text-white text-[10px] font-bold backdrop-blur-md">Rupture</span>
-                                    <?php elseif ($isLow): ?>
-                                        <span class="px-2.5 py-1 rounded-lg bg-amber-400/95 text-amber-950 text-[10px] font-bold backdrop-blur-md">
-                                            Stock faible (<?= $p['quantity'] ?>)
-                                        </span>
-                                    <?php endif; ?>
-                                </div>
-
-                                <!-- Cœur favori -->
-                                <button type="button" class="fav-btn absolute top-0 right-0 z-10 p-1 text-gray-300 hover:text-red-400 transition" aria-label="Ajouter aux favoris">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
-                                </button>
-
-                                <a href="<?= BASE_URL ?>/catalogue?id=<?= urlencode($p['id']) ?>" class="w-full h-full flex items-center justify-center">
-                                    <?php if ($imageUrl): ?>
-                                        <img src="<?= $imageUrl ?>" alt="<?= htmlspecialchars($p['name']) ?>"
-                                            class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500">
-                                    <?php else: ?>
-                                        <div class="w-full h-full flex flex-col items-center justify-center gap-1.5 text-gray-300 bg-gray-50 rounded-xl">
-                                            <svg class="w-12 h-12 stroke-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                            </svg>
-                                            <span class="text-[11px] font-medium">Image</span>
-                                        </div>
-                                    <?php endif; ?>
-                                </a>
+                        <!-- Badge + Favori -->
+                        <div class="flex items-start justify-between h-6">
+                            <div>
+                                <?php if ($isPromo): ?>
+                                    <span class="px-2 py-1 rounded-lg bg-red-500 text-white text-[11px] font-bold">
+                                        -<?= round((1 - $p['unit_price'] / $p['old_price']) * 100) ?>%
+                                    </span>
+                                <?php elseif ($isOut): ?>
+                                    <span class="px-2 py-1 rounded-lg bg-gray-400 text-white text-[10px] font-bold">Rupture</span>
+                                <?php elseif ($isLow): ?>
+                                    <span class="px-2 py-1 rounded-lg bg-amber-400 text-amber-950 text-[10px] font-bold">
+                                        Stock faible (<?= $p['quantity'] ?>)
+                                    </span>
+                                <?php endif; ?>
                             </div>
-
-                            <!-- Infos -->
-                            <div class="space-y-0.5 mb-4 px-1">
-                                <a href="<?= BASE_URL ?>/catalogue?id=<?= urlencode($p['id']) ?>"
-                                    class="font-semibold text-gray-900 text-sm hover:text-brand-orange transition line-clamp-1 block">
-                                    <?= htmlspecialchars($p['name']) ?>
-                                </a>
-                                <p class="text-xs text-gray-400 font-medium">
-                                    <?= htmlspecialchars($p['category_name']) ?>
-                                </p>
-                            </div>
+                            <button type="button" class="fav-btn w-7 h-7 -mr-1 -mt-1 flex items-center justify-center text-gray-300 hover:text-red-400 transition" aria-label="Ajouter aux favoris">
+                                <svg class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                </svg>
+                            </button>
                         </div>
 
-                        <!-- Prix + actions -->
-                        <div class="flex items-end justify-between gap-3 pt-3 border-t border-gray-50">
-                            <div class="flex items-baseline gap-2 flex-wrap leading-tight">
-                                <span class="text-base font-extrabold text-gray-900">
+                        <!-- Image -->
+                        <a href="<?= BASE_URL ?>/catalogue?id=<?= urlencode($p['id']) ?>"
+                            class="h-[150px] flex items-center justify-center p-2 my-3">
+                            <?php if ($imageUrl): ?>
+                                <img src="<?= $imageUrl ?>" alt="<?= htmlspecialchars($p['name']) ?>"
+                                    class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            <?php else: ?>
+                                <svg class="w-12 h-12 text-gray-300 stroke-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                            <?php endif; ?>
+                        </a>
+
+                        <!-- Nom + catégorie -->
+                        <a href="<?= BASE_URL ?>/catalogue?id=<?= urlencode($p['id']) ?>" class="mt-auto">
+                            <h3 class="text-[13.5px] font-bold text-gray-900 leading-snug line-clamp-1 group-hover:text-brand-orange transition">
+                                <?= htmlspecialchars($p['name']) ?>
+                            </h3>
+                        </a>
+                        <p class="text-[11.5px] text-gray-400 font-medium mt-0.5"><?= htmlspecialchars($p['category_name']) ?></p>
+
+                        <!-- Prix / Détails (au survol) -->
+                        <div class="mt-2.5 min-h-[34px] flex items-center">
+                            <div class="flex items-baseline gap-2 flex-wrap group-hover:hidden">
+                                <span class="text-[15px] font-extrabold text-gray-900">
                                     <?= number_format($p['unit_price'], 2, ',', ' ') ?> HTG
                                 </span>
                                 <?php if ($isPromo): ?>
-                                    <span class="text-xs text-gray-400 line-through font-semibold">
+                                    <span class="text-xs text-gray-400 line-through font-medium">
                                         <?= number_format($p['old_price'], 2, ',', ' ') ?>
                                     </span>
                                 <?php endif; ?>
                             </div>
 
-                            <div class="flex items-center gap-2 flex-shrink-0">
+                            <div class="hidden group-hover:flex w-full items-center gap-2">
                                 <button type="button"
                                     onclick='openProductModal(<?= json_encode($p, JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'
-                                    class="bg-brand-orange hover:bg-orange-600 text-white font-bold text-xs px-4 py-2 rounded-lg transition shadow-sm shadow-orange-500/25">
+                                    class="flex-1 text-center bg-brand-orange hover:bg-orange-600 text-white text-xs font-bold py-2 rounded-lg transition shadow-sm">
                                     Détails
                                 </button>
                                 <button type="button"
                                     onclick='openProductModal(<?= json_encode($p, JSON_HEX_APOS | JSON_HEX_QUOT) ?>)'
-                                    class="w-9 h-9 rounded-lg border border-gray-200 text-gray-400 hover:text-brand-orange hover:border-brand-orange flex items-center justify-center transition" aria-label="Voir le produit">
+                                    class="w-9 h-8 flex items-center justify-center rounded-lg border border-gray-200 bg-white hover:border-brand-orange hover:text-brand-orange text-gray-500 transition" aria-label="Voir le produit">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                     </svg>
@@ -462,7 +452,7 @@ $productsByCategory = $productsByCategory ?? [];
             <!-- Afficher plus (pagination fonctionnelle) -->
             <div class="text-center pt-2" id="show-more-wrap">
                 <button type="button" id="btn-show-more"
-                    class="px-8 py-3 rounded-xl bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600 text-sm font-semibold transition shadow-sm">
+                    class="px-7 py-2.5 rounded-lg bg-orange-50 hover:bg-orange-100 border border-orange-200 text-brand-orange text-xs font-bold transition">
                     <span id="show-more-label">Afficher plus de produits</span>
                 </button>
             </div>

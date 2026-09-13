@@ -23,6 +23,10 @@ class accountController extends DashboardPage
             $data['vendeurs'] = $userModel->allVendeurs();
         }
 
+        if (Auth::isSuperAdmin()) {
+            $data['autresComptes'] = $userModel->allExcept($_SESSION['user_id']);
+        }
+
         $this->render(BASE_PATH . '/apps/views/dashboard/comptes.php', $data);
     }
 
@@ -40,6 +44,7 @@ class accountController extends DashboardPage
             'modifier_profil' => $this->modifierProfil(),
             'changer_mot_de_passe' => $this->changerMotDePasse(),
             'ajouter_vendeur' => $this->ajouterVendeur(),
+            'changer_role' => $this->changerRole(),
             default => $this->rediriger('Action inconnue.', true),
         };
     }
@@ -117,6 +122,24 @@ class accountController extends DashboardPage
         } catch (PDOException $e) {
             $this->rediriger('Cet identifiant ou cet email est déjà utilisé.', true);
         }
+    }
+
+    private function changerRole(): void
+    {
+        Auth::requireSuperAdmin();
+
+        $id = (string) ($_POST['id'] ?? '');
+        $role = (string) ($_POST['role'] ?? '');
+
+        if (!in_array($role, ['admin', 'vendeur'], true)) {
+            $this->rediriger('Rôle invalide.', true);
+        }
+        if ($id === $_SESSION['user_id']) {
+            $this->rediriger('Vous ne pouvez pas changer votre propre rôle.', true);
+        }
+
+        (new userModel())->updateRole($id, $role);
+        $this->rediriger('Rôle mis à jour avec succès.');
     }
 
     private function rediriger(string $message, bool $erreur = false): void

@@ -2,6 +2,7 @@
 
 /** @var array $moi */
 /** @var array|null $vendeurs */
+/** @var array|null $autresComptes */
 /** @var string $csrfToken */
 ?>
 
@@ -168,6 +169,62 @@
                             <?php endif; ?>
                         </td>
                         <td class="px-4 py-3 text-white/60 whitespace-nowrap"><?= htmlspecialchars(date('d/m/Y', strtotime($v['created_at']))) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+<?php endif; ?>
+
+<?php if (Auth::isSuperAdmin()): ?>
+
+    <!-- Gestion des rôles (réservé au super-administrateur) -->
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg overflow-x-auto mt-6">
+        <div class="p-6 pb-0">
+            <h2 class="font-semibold text-white mb-1">Gestion des rôles</h2>
+            <p class="text-sm text-white/60 mb-4">
+                Changez le statut d'un membre entre administrateur et vendeur. Seul le compte administrateur d'origine peut effectuer cette action.
+            </p>
+        </div>
+        <table class="min-w-full text-sm">
+            <thead class="bg-white/5 text-white/50 uppercase text-xs">
+                <tr>
+                    <th class="px-4 py-3 text-left">Nom</th>
+                    <th class="px-4 py-3 text-left">Identifiant</th>
+                    <th class="px-4 py-3 text-left">Rôle actuel</th>
+                    <th class="px-4 py-3 text-left">Changer le rôle</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/10">
+                <?php if (empty($autresComptes)): ?>
+                    <tr>
+                        <td colspan="4" class="px-4 py-6 text-center text-white/40">Aucun autre compte pour l'instant.</td>
+                    </tr>
+                <?php endif; ?>
+                <?php foreach ($autresComptes as $c): ?>
+                    <tr>
+                        <td class="px-4 py-3 font-medium text-white"><?= htmlspecialchars($c['name']) ?></td>
+                        <td class="px-4 py-3 text-white/60">@<?= htmlspecialchars($c['username']) ?></td>
+                        <td class="px-4 py-3">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium <?= $c['role'] === 'admin' ? 'bg-orange-500/20 text-orange-300' : 'bg-blue-500/20 text-blue-300' ?>">
+                                <?= $c['role'] === 'admin' ? 'Administrateur' : 'Vendeur' ?>
+                            </span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <form method="POST" action="<?= BASE_URL ?>/utilisateurs" class="flex items-center gap-2" onsubmit="return confirm('Changer le rôle de <?= htmlspecialchars(addslashes($c['name'])) ?> ?');">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                                <input type="hidden" name="action" value="changer_role">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($c['id']) ?>">
+                                <select name="role" class="bg-white/10 border border-white/20 text-white rounded px-2 py-1.5 text-sm">
+                                    <option value="vendeur" class="text-gray-800" <?= $c['role'] === 'vendeur' ? 'selected' : '' ?>>Vendeur</option>
+                                    <option value="admin" class="text-gray-800" <?= $c['role'] === 'admin' ? 'selected' : '' ?>>Administrateur</option>
+                                </select>
+                                <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-3 py-1.5 rounded transition text-sm">
+                                    Appliquer
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

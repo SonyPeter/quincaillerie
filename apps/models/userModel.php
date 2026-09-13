@@ -127,4 +127,13 @@ class userModel
             'id' => $id,
         ]);
     }
+
+    public function updateRole(string $id, string $role): void
+    {
+        $stmt = $this->db->prepare('UPDATE users SET role = :role WHERE id = :id');
+        $stmt->execute([
+            'role' => $role,
+            'id' => $id,
+        ]);
+    }
 }
